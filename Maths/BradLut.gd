@@ -10,7 +10,7 @@ var tan_lookup = {}
 var Brad = load("Maths/Brad.gd")
 
 
-func _init() -> void:
+func _init():
 	for i in range(0, 256):
 		var brad = Brad.new()
 		brad.brad(i)
@@ -33,14 +33,14 @@ func cos_i(a : int) -> float:
 func tan_i(a : int) -> float:
 	return tan_lookup[a]
 
-func sin(brad : Brad) -> float:
+func sin_b(brad : Brad) -> float:
 	return sin_i(brad.get_angle())
 
 
-func cos(brad : Brad) -> float:
+func cos_b(brad : Brad) -> float:
 	return cos_i(brad.get_angle())
 
-func tan(brad : Brad) -> float:
+func tan_b(brad : Brad) -> float:
 	return tan_i(brad.get_angle())
 
 var brad_to_vector_lookup = {}

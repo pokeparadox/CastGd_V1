@@ -1,12 +1,12 @@
-tool
+@tool
 class_name Rectangle
 extends Node2D
 
-export var is_filled : bool = true setget _set_is_filled
-export var line_width : float = 1.0 setget _set_line_width
-export var width : float = 4.0 setget _set_width
-export var height : float = 4.0 setget _set_height
-export var colour = Color.white setget _set_colour
+@export var is_filled : bool = true : set = _set_is_filled
+@export var line_width : float = 1.0 : set = _set_line_width
+@export var width : float = 4.0 : set = _set_width
+@export var height : float = 4.0 : set = _set_height
+@export var colour = Color.WHITE : set = _set_colour
 
 
 func _draw() -> void:

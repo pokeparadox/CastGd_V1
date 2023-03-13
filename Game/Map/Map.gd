@@ -1,10 +1,10 @@
-tool
+@tool
 extends Node2D
 
 var RayInfo = load("Game/Caster/RayInfo.gd")
 
 var map_dims := Vector2(8, 8)
-export var block_size : int = 64
+@export var block_size : int = 64
 var map_data := [
  1,1,1,1,1,1,1,1,
  1,0,1,0,0,0,0,1,
@@ -25,15 +25,15 @@ func get_map_value(index : int) -> int:
 
 
 func draw_map() -> void:
-	var c := Color.white
+	var c := Color.WHITE
 	for y in range(map_dims.y):
 		for x in range(map_dims.x):
 			if map_data[(y * map_dims.x) + x] == 1:
-				c = Color.white
+				c = Color.WHITE
 			else:
-				c = Color.black
+				c = Color.BLACK
 			
-			draw_rect(Rect2(Vector2((x * block_size) + 1, (y * block_size) + 1), Vector2(block_size - 1, block_size - 1)), c, true, 1)
+			draw_rect(Rect2(Vector2((x * block_size) + 1, (y * block_size) + 1), Vector2(block_size - 1, block_size - 1)), c, true)
 
 
 func draw_player_rays() -> void:
@@ -50,10 +50,10 @@ func _draw():
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	update()
+	queue_redraw()
 
 
-func _on_Screen_player_ray(start_pos, end_pos, colour, ray_count):
+func _on_screen_player_ray(start_pos, end_pos, colour, ray_count):
 	var info : RayInfo = RayInfo.new()
 	info.start_position = start_pos
 	info.end_position = end_pos
@@ -62,4 +62,4 @@ func _on_Screen_player_ray(start_pos, end_pos, colour, ray_count):
 		player_rays[ray_count].queue_free()
 	
 	player_rays[ray_count] = info
-	update()
+	queue_redraw()

@@ -6,7 +6,7 @@ const LIMIT : float = 0.0001
 const MAX_DEPTH : int = 8
 const FIELD_OF_VISION : int = 60
 const SCREEN_HEIGHT : int = 320
-var half_screen_height : int = SCREEN_HEIGHT * 0.5
+var half_screen_height : int = int(SCREEN_HEIGHT * 0.5)
 const SCREEN_WIDTH : int = 480
 
 
@@ -15,13 +15,13 @@ var MAP_WIDTH : int
 var MAP_HEIGHT : int
 
 func _ready():
-	 MAP_BLOCK_SIZE = get_node("../Map").block_size
-	 MAP_WIDTH = get_node("../Map").map_dims.x
-	 MAP_HEIGHT = get_node("../Map").map_dims.y
+	MAP_BLOCK_SIZE = get_node("../Map").block_size
+	MAP_WIDTH = get_node("../Map").map_dims.x
+	MAP_HEIGHT = get_node("../Map").map_dims.y
 
 
 func update_screen() -> void:
-	update()
+	queue_redraw()
 
 
 func fix_angle(a : int) -> int:
@@ -71,9 +71,9 @@ func draw_rays_2d() -> void:
 		# Vertical
 		ray_depth = 0
 		dis_v = INF
-		var tan_v : float = tan(deg2rad(ray_angle))
-		var cos_v : float = cos(deg2rad(ray_angle))
-		var sin_v : float = sin(deg2rad(ray_angle))
+		var tan_v : float = tan(deg_to_rad(ray_angle))
+		var cos_v : float = cos(deg_to_rad(ray_angle))
+		var sin_v : float = sin(deg_to_rad(ray_angle))
 		if cos_v > 0.001:
 			# Looking left
 			ray_position.x = ((int(player_position.x) >> 6) << 6) + MAP_BLOCK_SIZE
@@ -139,18 +139,18 @@ func draw_rays_2d() -> void:
 				ray_position += offset
 				ray_depth += 1
 		
-		colour = Color8(0, 0.8 * 255, 0)
+		colour = Color8(0, int(0.8 * 255), 0)
 		if dis_v < dis_h:
 			ray_position.x = vx
 			ray_position.y = vy
 			dis_h = dis_v
-			colour = Color8(0, 0.6 * 255, 0)
+			colour = Color8(0, int(0.6 * 255), 0)
 		
 		# Let the map know how to draw the current players ray
 		emit_signal("player_ray", player_position, ray_position, colour, r)
 		
 		var ca : float = fix_angle(player_angle - int(ray_angle))
-		dis_h = dis_h * cos(deg2rad(ca))
+		dis_h = dis_h * cos(deg_to_rad(ca))
 		var line_h : int = int((MAP_BLOCK_SIZE * SCREEN_HEIGHT)/float(dis_h))
 		if line_h > SCREEN_HEIGHT:
 			line_h = SCREEN_HEIGHT
@@ -158,3 +158,7 @@ func draw_rays_2d() -> void:
 		draw_line(Vector2(4 + (r * ray_scaler), line_off), Vector2(4 + (r * ray_scaler), line_off + line_h), colour, ray_scaler)
 		ray_angle = fix_angle(int(ray_angle) - 1)  
 
+
+
+func _on_player_player_moved():
+	pass # Replace with function body.

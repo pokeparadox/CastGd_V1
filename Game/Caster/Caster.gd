@@ -1,4 +1,4 @@
 extends Node2D
 
-func _on_Player_player_moved():
+func _on_player_player_moved():
 	$Screen.update_screen()

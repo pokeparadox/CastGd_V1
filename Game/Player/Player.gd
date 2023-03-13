@@ -17,7 +17,7 @@ func _ready():
 	heading = Brad.new()
 	heading.set_angle_deg(90)
 	direction_vector = Vector2(1.0, 0.0)
-	update()
+	queue_redraw()
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -39,7 +39,7 @@ func _process(delta):
 		direction_vector = BradLut.brad_to_vector_2d(heading)
 		position = position + (direction_vector * delta * 100 * dir_vec.y)
 		emit_signal("player_moved")
-		update()
+		queue_redraw()
 
 func _draw():
-	draw_line(Vector2(0,0), direction_vector * 20, Color.yellow, 4,true)
+	draw_line(Vector2(0,0),direction_vector * 20,Color.YELLOW,4)
